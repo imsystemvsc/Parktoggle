@@ -10,7 +10,7 @@ By running quietly in the system tray, Park Toggle seamlessly switches your PC b
 - **Advanced Core Parking Control**: Actively unparks all logical cores during intensive tasks to eliminate micro-stutters, and aggressively parks them during idle time to reduce temperatures.
 - **Live Hardware Telemetry**: Features a beautiful, dark-themed dashboard providing real-time data on CPU package temperatures, total power draw, and per-core parking status.
 - **Customizable Sensor Monitoring**: Integrates with LibreHardwareMonitor to track and display precise readouts for various system sensors in a clean, symmetrical grid layout.
-- **Unobtrusive System Tray Operation**: Designed to launch silently with Windows and reside in the system tray with custom status icons (❄️ for Cool & Idle, ⚡ for Always On).
+- **Unobtrusive System Tray Operation**: Designed to launch silently with Windows and reside in the system tray with custom status icons (❄️ for Cool & Idle, ⚡ for Always On). Includes a custom dark-themed context menu with quick access to common System Tools like Restart Explorer, Task Manager, Flush DNS, and more.
 - **Modern UI**: A sleek, edge-to-edge landscape interface utilizing Windows 11 Mica backdrop and immersive dark mode title bars.
 
 ## 🚀 Getting Started

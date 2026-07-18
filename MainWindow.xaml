@@ -361,14 +361,141 @@
                         TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="{Binding ViewModel.ModeValueText, StringFormat=Current Mode: \{0\}}" IsEnabled="False" />
+                    <ContextMenu.Resources>
+                        <SolidColorBrush x:Key="MenuBackgroundBrush" Color="#1E1F27" />
+                        <SolidColorBrush x:Key="MenuBorderBrush" Color="#2C2E37" />
+                        <SolidColorBrush x:Key="MenuForegroundBrush" Color="#EEF0F4" />
+                        <SolidColorBrush x:Key="MenuHighlightBrush" Color="#2A2D38" />
+
+                        <Style TargetType="ContextMenu">
+                            <Setter Property="Background" Value="{StaticResource MenuBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource MenuForegroundBrush}" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="BorderBrush" Value="{StaticResource MenuBorderBrush}" />
+                            <Setter Property="Padding" Value="4" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ContextMenu">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="8"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ItemsPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style TargetType="MenuItem">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Foreground" Value="{StaticResource MenuForegroundBrush}" />
+                            <Setter Property="Padding" Value="12 8" />
+                            <Setter Property="Margin" Value="4 2" />
+                            <Setter Property="FontSize" Value="13" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="MenuItem">
+                                        <Border x:Name="Border"
+                                                Background="Transparent"
+                                                CornerRadius="6"
+                                                Padding="{TemplateBinding Padding}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <ContentPresenter ContentSource="Icon" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                <ContentPresenter Grid.Column="1" ContentSource="Header" VerticalAlignment="Center" Margin="12 0 0 0" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsHighlighted" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="{StaticResource MenuHighlightBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="#6B7280" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style TargetType="Separator">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Height" Value="1" />
+                            <Setter Property="Margin" Value="12 4" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Separator">
+                                        <Border Background="{StaticResource MenuBorderBrush}" Height="1" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ContextMenu.Resources>
+
+                    <MenuItem Header="{Binding ViewModel.ModeValueText, StringFormat=Current Mode: \{0\}}" IsEnabled="False">
+                        <MenuItem.Icon>
+                            <Image Source="{Binding ViewModel.TrayIconSource}" Width="16" Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="Switch Mode" Command="{Binding ViewModel.ToggleModeCommand}" />
+                    <MenuItem Header="Switch Mode" Command="{Binding ViewModel.ToggleModeCommand}">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE8AB;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="Show Window" Click="ShowWindow_Click" />
-                    <MenuItem Header="Open Log" Command="{Binding ViewModel.OpenLogCommand}" />
+                    <MenuItem Header="Show Dashboard" Click="ShowWindow_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/Resources/Icons/main.ico" Width="16" Height="16" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open Log" Command="{Binding ViewModel.OpenLogCommand}">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7C3;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
-                    <MenuItem Header="Exit" Click="Exit_Click" />
+                    <MenuItem Header="System Tools" IsEnabled="False" Foreground="#F5A24C" FontWeight="SemiBold">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE713;" FontSize="15" Foreground="#F5A24C" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Empty Recycle Bin" Click="EmptyRecycleBin_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE74D;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Restart Explorer" Click="RestartExplorer_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE72C;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open Task Manager" Click="OpenTaskManager_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7F4;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Open Power Options" Click="OpenPowerOptions_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE836;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Flush DNS Cache" Click="FlushDNS_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE774;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Exit" Click="Exit_Click">
+                        <MenuItem.Icon>
+                            <TextBlock FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" Text="&#xE7E8;" FontSize="15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>

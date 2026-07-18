@@ -204,6 +204,58 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         ExitApplication();
     }
 
+    private void EmptyRecycleBin_Click(object sender, RoutedEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "powershell.exe",
+            Arguments = "-NoProfile -Command \"Clear-RecycleBin -Force\"",
+            CreateNoWindow = true,
+            UseShellExecute = false
+        });
+    }
+
+    private void RestartExplorer_Click(object sender, RoutedEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "powershell.exe",
+            Arguments = "-NoProfile -Command \"Stop-Process -Name explorer -Force\"",
+            CreateNoWindow = true,
+            UseShellExecute = false
+        });
+    }
+
+    private void OpenTaskManager_Click(object sender, RoutedEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "taskmgr.exe",
+            UseShellExecute = true
+        });
+    }
+
+    private void OpenPowerOptions_Click(object sender, RoutedEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "control.exe",
+            Arguments = "powercfg.cpl",
+            UseShellExecute = true
+        });
+    }
+
+    private void FlushDNS_Click(object sender, RoutedEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+        {
+            FileName = "ipconfig.exe",
+            Arguments = "/flushdns",
+            CreateNoWindow = true,
+            UseShellExecute = false
+        });
+    }
+
     private async Task InitializeMonitoringAsync()
     {
         if (_monitoringInitialized)
