@@ -15,6 +15,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using Microsoft.Win32;
 using ParkToggleWpf.Monitoring;
+using ParkToggleWpf;
 
 namespace ParkToggleWpf.ViewModels;
 
