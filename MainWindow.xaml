@@ -17,19 +17,19 @@
         Background="#121217">
     <Window.Resources>
         <converters:CoreNameToNumberConverter x:Key="CoreNameToNumberConverter" />
-        <SolidColorBrush x:Key="WindowGradientTop" Color="#1A1B23" />
-        <SolidColorBrush x:Key="WindowGradientBottom" Color="#101015" />
+        <SolidColorBrush x:Key="WindowGradientTop" Color="#191919" />
+        <SolidColorBrush x:Key="WindowGradientBottom" Color="#121212" />
         <LinearGradientBrush x:Key="WindowBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#1A1B23" Offset="0" />
-            <GradientStop Color="#101015" Offset="1" />
+            <GradientStop Color="#191919" Offset="0" />
+            <GradientStop Color="#121212" Offset="1" />
         </LinearGradientBrush>
-        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1E1F27" />
-        <SolidColorBrush x:Key="CardBorderBrush" Color="#2C2E37" />
-        <SolidColorBrush x:Key="ForegroundBrush" Color="#EEF0F4" />
-        <SolidColorBrush x:Key="MutedBrush" Color="#9AA0AE" />
-        <SolidColorBrush x:Key="AccentBrush" Color="#8CA9FF" />
-        <SolidColorBrush x:Key="AccentHoverBrush" Color="#7C91FF" />
-        <SolidColorBrush x:Key="AccentPressedBrush" Color="#5E6FE0" />
+        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#222222" />
+        <SolidColorBrush x:Key="CardBorderBrush" Color="#333333" />
+        <SolidColorBrush x:Key="ForegroundBrush" Color="#F0F0F0" />
+        <SolidColorBrush x:Key="MutedBrush" Color="#888888" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#00D084" />
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#00E691" />
+        <SolidColorBrush x:Key="AccentPressedBrush" Color="#00B371" />
                 <Style x:Key="OverlayScrollBarRepeatButtonStyle" TargetType="RepeatButton">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Template">
@@ -80,19 +80,19 @@
             </Setter>
         </Style>
 
-<SolidColorBrush x:Key="SecondaryBorderBrush" Color="#414451" />
-        <SolidColorBrush x:Key="AlwaysOnBrush" Color="#FFD248" />
-        <SolidColorBrush x:Key="AlwaysOnHoverBrush" Color="#F0BA32" />
-        <SolidColorBrush x:Key="AlwaysOnPressedBrush" Color="#C99612" />
-        <SolidColorBrush x:Key="AlwaysOnTextBrush" Color="#3C2E00" />
+        <SolidColorBrush x:Key="SecondaryBorderBrush" Color="#444444" />
+        <SolidColorBrush x:Key="AlwaysOnBrush" Color="#FF5C00" />
+        <SolidColorBrush x:Key="AlwaysOnHoverBrush" Color="#FF7020" />
+        <SolidColorBrush x:Key="AlwaysOnPressedBrush" Color="#E05100" />
+        <SolidColorBrush x:Key="AlwaysOnTextBrush" Color="#FFFFFF" />
 
-        <DropShadowEffect x:Key="CardShadow" BlurRadius="28" Opacity="0.45" ShadowDepth="0" Color="#88000000" />
+        <DropShadowEffect x:Key="CardShadow" BlurRadius="10" Opacity="0.2" ShadowDepth="4" Color="#000000" />
         <ControlTemplate x:Key="RoundedComboToggleButton" TargetType="ToggleButton">
             <Border x:Name="ToggleBorder"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     BorderThickness="0"
-                    CornerRadius="14">
+                    CornerRadius="0">
                 <Path Data="M 0 0 L 5 5 L 10 0"
                       Stroke="#9AA0AE"
                       StrokeThickness="2"
@@ -112,8 +112,8 @@
 
         <Style x:Key="RoundedComboBoxStyle" TargetType="ComboBox">
             <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-            <Setter Property="Background" Value="#1F212B" />
-            <Setter Property="BorderBrush" Value="#2B2E37" />
+            <Setter Property="Background" Value="#1C1C1C" />
+            <Setter Property="BorderBrush" Value="#333333" />
             <Setter Property="Padding" Value="12 8" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -123,7 +123,7 @@
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="1"
-                                    CornerRadius="14" />
+                                    CornerRadius="2" />
                             <ContentPresenter Margin="14,4,36,4"
                                               HorizontalAlignment="Left"
                                               VerticalAlignment="Center"
@@ -147,10 +147,10 @@
                                    IsOpen="{TemplateBinding IsDropDownOpen}"
                                    PopupAnimation="Slide">
                                 <Grid MaxHeight="220" MinWidth="{TemplateBinding ActualWidth}">
-                                    <Border Background="#1B1D26"
-                                            BorderBrush="#2B2E37"
+                                    <Border Background="#1C1C1C"
+                                            BorderBrush="#333333"
                                             BorderThickness="1"
-                                            CornerRadius="14">
+                                            CornerRadius="2">
                                         <ScrollViewer Margin="2" SnapsToDevicePixels="True">
                                             <StackPanel>
                                                 <ItemsPresenter />
@@ -165,8 +165,8 @@
                                 <Setter TargetName="BackgroundBorder" Property="MinHeight" Value="36" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="#3B3F4C" />
-                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#242734" />
+                                <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="#555555" />
+                                <Setter TargetName="BackgroundBorder" Property="Background" Value="#2A2A2A" />
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
                                 <Setter TargetName="BackgroundBorder" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
@@ -193,7 +193,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1"
-                                CornerRadius="16"
+                                CornerRadius="2"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
@@ -211,22 +211,22 @@
                 
 
         <Style x:Key="WarningButtonStyle" TargetType="Button" BasedOn="{StaticResource ChipButtonBaseStyle}">
-            <Setter Property="Foreground" Value="#16110F" />
-            <Setter Property="Background" Value="#F7B267" />
-            <Setter Property="BorderBrush" Value="#F7B267" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="Background" Value="#FF5C00" />
+            <Setter Property="BorderBrush" Value="#FF5C00" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F5A24C" />
-                    <Setter Property="BorderBrush" Value="#F5A24C" />
+                    <Setter Property="Background" Value="#FF7020" />
+                    <Setter Property="BorderBrush" Value="#FF7020" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#DC8C39" />
-                    <Setter Property="BorderBrush" Value="#DC8C39" />
+                    <Setter Property="Background" Value="#E05100" />
+                    <Setter Property="BorderBrush" Value="#E05100" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#9F7249" />
-                    <Setter Property="BorderBrush" Value="#9F7249" />
-                    <Setter Property="Foreground" Value="#3D3124" />
+                    <Setter Property="Background" Value="#803400" />
+                    <Setter Property="BorderBrush" Value="#803400" />
+                    <Setter Property="Foreground" Value="#AAAAAA" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -242,17 +242,18 @@
                     <ControlTemplate TargetType="ListViewItem">
                         <Border x:Name="RowBorder"
                                 Background="Transparent"
-                                CornerRadius="8"
-                                BorderThickness="0"
+                                CornerRadius="0"
+                                BorderThickness="0 0 0 1"
+                                BorderBrush="#333333"
                                 Padding="0">
                             <ContentPresenter Margin="12 6"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="RowBorder" Property="Background" Value="#232631" />
+                                <Setter TargetName="RowBorder" Property="Background" Value="#2A2A2A" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="RowBorder" Property="Background" Value="#2A2D3A" />
+                                <Setter TargetName="RowBorder" Property="Background" Value="#333333" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="RowBorder" Property="Opacity" Value="0.6" />
@@ -264,7 +265,7 @@
         </Style>
 
 <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ChipButtonBaseStyle}">
-            <Setter Property="Foreground" Value="#101015" />
+            <Setter Property="Foreground" Value="#000000" />
             <Setter Property="Background" Value="{StaticResource AccentBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
             <Style.Triggers>
@@ -286,19 +287,19 @@
 
         <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ChipButtonBaseStyle}">
             <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-            <Setter Property="Background" Value="#1F212B" />
+            <Setter Property="Background" Value="#2A2A2A" />
             <Setter Property="BorderBrush" Value="{StaticResource SecondaryBorderBrush}" />
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#2A2D38" />
+                    <Setter Property="Background" Value="#383838" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#1C1E26" />
+                    <Setter Property="Background" Value="#1C1C1C" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#1A1B22" />
-                    <Setter Property="BorderBrush" Value="#2E3038" />
-                    <Setter Property="Foreground" Value="#6C707E" />
+                    <Setter Property="Background" Value="#222222" />
+                    <Setter Property="BorderBrush" Value="#2E2E2E" />
+                    <Setter Property="Foreground" Value="#666666" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -323,7 +324,9 @@
                     <ControlTemplate TargetType="TabItem">
                         <Border x:Name="Border"
                                 Background="Transparent"
-                                CornerRadius="16"
+                                CornerRadius="2"
+                                BorderBrush="Transparent"
+                                BorderThickness="1"
                                 Padding="{TemplateBinding Padding}"
                                 Margin="0,0,8,0">
                             <ContentPresenter x:Name="ContentSite"
@@ -333,10 +336,11 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#2A2D38" />
+                                <Setter TargetName="Border" Property="Background" Value="#222222" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#333333" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#22242E" />
+                                <Setter TargetName="Border" Property="Background" Value="#2A2A2A" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Border" Property="Opacity" Value="0.6" />
@@ -500,9 +504,11 @@
             </tb:TaskbarIcon.ContextMenu>
         </tb:TaskbarIcon>
 
-        <Border Padding="36"
-                CornerRadius="32"
-                Margin="32,20"
+        <Border Padding="24"
+                CornerRadius="2"
+                Margin="16"
+                BorderBrush="#333333"
+                BorderThickness="1"
                 Background="{StaticResource CardBackgroundBrush}"
                 Effect="{StaticResource CardShadow}"
                 HorizontalAlignment="Stretch"
@@ -514,9 +520,10 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Park Toggle"
-                           FontSize="32"
-                           FontWeight="SemiBold"
+                           Text="PARK TOGGLE"
+                           FontFamily="Bahnschrift"
+                           FontSize="28"
+                           FontWeight="Bold"
                            Foreground="{StaticResource ForegroundBrush}"
                            Margin="0 0 0 24" />
 
@@ -531,9 +538,9 @@
             <!-- LEFT COLUMN -->
             <StackPanel Grid.Column="0" Margin="0,0,16,0">
                 <!-- Card 1: Power Profile -->
-                <Border Background="#1B1D26" CornerRadius="16" Padding="20" Margin="0,0,0,16" BorderBrush="#2C2E37" BorderThickness="1">
+                <Border Background="#1C1C1C" CornerRadius="2" Padding="20" Margin="0,0,0,16" BorderBrush="#333333" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Active Power Plan" Foreground="{StaticResource MutedBrush}" FontSize="14" Margin="0,0,0,8" />
+                        <TextBlock Text="POWER PROFILE" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="13" Margin="0,0,0,12" />
                         <ComboBox x:Name="PlanCombo" 
                                   ItemsSource="{Binding ViewModel.Plans}" 
                                   SelectedItem="{Binding ViewModel.SelectedPlan}" 
@@ -552,9 +559,9 @@
                 </Border>
 
                 <!-- Card 2: Quick Actions -->
-                <Border Background="#1B1D26" CornerRadius="16" Padding="20" BorderBrush="#2C2E37" BorderThickness="1">
+                <Border Background="#1C1C1C" CornerRadius="2" Padding="20" BorderBrush="#333333" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Quick Actions" Foreground="{StaticResource MutedBrush}" FontSize="14" Margin="0,0,0,12" />
+                        <TextBlock Text="QUICK ACTIONS" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="13" Margin="0,0,0,12" />
                         
                         <Button Command="{Binding ViewModel.ToggleModeCommand}" Content="Switch to Cool Idle" HorizontalAlignment="Stretch" Margin="0,0,0,8">
                             <Button.Style>
@@ -593,7 +600,7 @@
             <!-- RIGHT COLUMN -->
             <StackPanel Grid.Column="1">
                 <!-- Card 3: Thermals & Telemetry -->
-                <Border Background="#1B1D26" CornerRadius="16" Padding="20" Margin="0,0,0,16" BorderBrush="#2C2E37" BorderThickness="1">
+                <Border Background="#1C1C1C" CornerRadius="2" Padding="20" Margin="0,0,0,16" BorderBrush="#333333" BorderThickness="1">
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -602,8 +609,8 @@
                             </Grid.ColumnDefinitions>
                             
                             <StackPanel Grid.Column="0" Margin="0,0,16,0">
-                                <TextBlock Text="CPU Temperature" Foreground="{StaticResource MutedBrush}" FontSize="14" />
-                                <TextBlock Text="{Binding ViewModel.PackageTempText}" Margin="0,4,0,0" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" />
+                                <TextBlock Text="CPU TEMPERATURE" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="13" />
+                                <TextBlock Text="{Binding ViewModel.PackageTempText}" FontFamily="Consolas, Cascadia Code, Courier New" Margin="0,4,0,0" FontSize="42" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" />
                             </StackPanel>
                             
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -612,8 +619,8 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Mode:" Foreground="{StaticResource ForegroundBrush}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,6,0" />
-                                    <TextBlock Grid.Column="1" Text="{Binding ViewModel.ModeValueText}" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center">
+                                    <TextBlock Text="MODE:" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="13" VerticalAlignment="Center" Margin="0,0,8,0" />
+                                    <TextBlock Grid.Column="1" Text="{Binding ViewModel.ModeValueText}" FontFamily="Bahnschrift" FontSize="13" FontWeight="Bold" VerticalAlignment="Center">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
@@ -630,11 +637,11 @@
                                     </TextBlock>
                                 </Grid>
                                 
-                                <TextBlock Text="{Binding ViewModel.AutomationStatusText}" Foreground="{StaticResource AccentBrush}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8" />
+                                <TextBlock Text="{Binding ViewModel.AutomationStatusText}" FontFamily="Consolas, Cascadia Code, Courier New" Foreground="{StaticResource AccentBrush}" FontSize="12" Margin="0,0,0,8" />
                                 
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding ViewModel.CoreLabel}" ToolTip="Core Parking Min Cores (AC/DC)" Foreground="{StaticResource MutedBrush}" FontSize="12" Margin="0,0,0,2" />
-                                    <TextBlock Text="{Binding ViewModel.IdleLabel}" ToolTip="Idle State Max (AC/DC)" Foreground="{StaticResource MutedBrush}" FontSize="12" />
+                                    <TextBlock Text="{Binding ViewModel.CoreLabel}" ToolTip="Core Parking Min Cores (AC/DC)" FontFamily="Consolas, Cascadia Code, Courier New" Foreground="{StaticResource MutedBrush}" FontSize="12" Margin="0,0,0,2" />
+                                    <TextBlock Text="{Binding ViewModel.IdleLabel}" ToolTip="Idle State Max (AC/DC)" FontFamily="Consolas, Cascadia Code, Courier New" Foreground="{StaticResource MutedBrush}" FontSize="12" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
@@ -652,35 +659,48 @@
                 </Border>
 
                 <!-- Card 4: Core Parking Status -->
-                <Border Background="#1B1D26" CornerRadius="16" Padding="20" BorderBrush="#2C2E37" BorderThickness="1">
+                <Border Background="#1C1C1C" CornerRadius="2" Padding="20" BorderBrush="#333333" BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Logical Core Parking Status" Foreground="{StaticResource MutedBrush}" FontSize="14" Margin="0,0,0,12" />
+                        <TextBlock Text="LOGICAL CORE TOPOGRAPHY MAP" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="13" Margin="0,0,0,12" />
                         
                         <ItemsControl ItemsSource="{Binding ViewModel.Cores}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="{Binding ViewModel.CoreColumns}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border CornerRadius="6" Margin="3" ToolTip="{Binding CoreName}" MinHeight="32">
+                                    <Border CornerRadius="0" Margin="1,0" ToolTip="{Binding CoreName}" Width="12" Height="40" BorderThickness="1">
                                         <Border.Style>
                                             <Style TargetType="Border">
-                                                <Setter Property="Background" Value="#4CAF50" />
+                                                <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+                                                <Setter Property="BorderBrush" Value="#00FF9D" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsParked}" Value="True">
-                                                        <Setter Property="Background" Value="#2C2E37" />
+                                                        <Setter Property="Background" Value="#151515" />
+                                                        <Setter Property="BorderBrush" Value="#333333" />
+                                                        <Setter Property="Height" Value="32" />
+                                                        <Setter Property="Margin" Value="1,4" />
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding DataContext.ViewModel.CurrentMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="AlwaysOn">
+                                                        <Setter Property="Background" Value="{StaticResource AlwaysOnBrush}" />
+                                                        <Setter Property="BorderBrush" Value="#FF9D00" />
+                                                    </DataTrigger>
+                                                    <!-- Re-apply parked style logic if parked in AlwaysOn (though unlikely) -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding IsParked}" Value="True" />
+                                                            <Condition Binding="{Binding DataContext.ViewModel.CurrentMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="AlwaysOn" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Background" Value="#151515" />
+                                                        <Setter Property="BorderBrush" Value="#333333" />
+                                                        <Setter Property="Height" Value="32" />
+                                                        <Setter Property="Margin" Value="1,4" />
+                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
-                                        <TextBlock Text="{Binding CoreName, Converter={StaticResource CoreNameToNumberConverter}}" 
-                                                   Foreground="White" 
-                                                   FontSize="12" 
-                                                   FontWeight="SemiBold" 
-                                                   HorizontalAlignment="Center" 
-                                                   VerticalAlignment="Center" />
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -691,11 +711,11 @@
         </Grid>
 </TabItem>
 <TabItem Header="Monitoring">
-                        <Border Background="#1B1D26"
-                                CornerRadius="20"
+                        <Border Background="#1C1C1C"
+                                CornerRadius="2"
                                 Padding="24"
                                 Margin="0 0 0 16"
-                                BorderBrush="#2C2E37"
+                                BorderBrush="#333333"
                                 BorderThickness="1">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -708,10 +728,10 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Active Sensors"
+                                    <TextBlock Text="ACTIVE SENSORS"
+                                               FontFamily="Bahnschrift"
                                                Foreground="{StaticResource ForegroundBrush}"
-                                               FontSize="18"
-                                               FontWeight="SemiBold" />
+                                               FontSize="16" />
                                     <Button Grid.Column="1"
                                             Content="Settings"
                                             Margin="12 0 0 0"
@@ -726,10 +746,10 @@
                                     </Grid.RowDefinitions>
 
                                     <Grid Grid.Row="0">
-                                        <Border Background="#1B1D26"
-                                                BorderBrush="#2C2E37"
+                                        <Border Background="#1C1C1C"
+                                                BorderBrush="#333333"
                                                 BorderThickness="1"
-                                                CornerRadius="12">
+                                                CornerRadius="2">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto" />
@@ -743,30 +763,30 @@
                                                         <ColumnDefinition Width="80" />
                                                         <ColumnDefinition Width="80" />
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="Sensor"
+                                                    <TextBlock Text="SENSOR"
+                                                               FontFamily="Bahnschrift"
                                                                Foreground="{StaticResource MutedBrush}"
-                                                               FontSize="12"
-                                                               FontWeight="SemiBold" />
+                                                               FontSize="12" />
                                                     <TextBlock Grid.Column="1"
-                                                               Text="Current"
+                                                               Text="CURRENT"
                                                                Margin="24 0 0 0"
+                                                               FontFamily="Bahnschrift"
                                                                Foreground="{StaticResource MutedBrush}"
                                                                FontSize="12"
-                                                               FontWeight="SemiBold"
                                                                HorizontalAlignment="Right" />
                                                     <TextBlock Grid.Column="2"
-                                                               Text="Min"
+                                                               Text="MIN"
                                                                Margin="24 0 0 0"
+                                                               FontFamily="Bahnschrift"
                                                                Foreground="{StaticResource MutedBrush}"
                                                                FontSize="12"
-                                                               FontWeight="SemiBold"
                                                                HorizontalAlignment="Right" />
                                                     <TextBlock Grid.Column="3"
-                                                               Text="Max"
+                                                               Text="MAX"
                                                                Margin="24 0 0 0"
+                                                               FontFamily="Bahnschrift"
                                                                Foreground="{StaticResource MutedBrush}"
                                                                FontSize="12"
-                                                               FontWeight="SemiBold"
                                                                HorizontalAlignment="Right" />
                                                 </Grid>
 
