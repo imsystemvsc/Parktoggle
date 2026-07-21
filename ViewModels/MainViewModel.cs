@@ -58,11 +58,10 @@ public partial class MainViewModel : ObservableObject, IDisposable
     { 
         new Axis 
         { 
-            IsVisible = true,
+            IsVisible = false,
             ShowSeparatorLines = false,
             LabelsPaint = new SolidColorPaint(new SKColor(136, 136, 136)),
-            TextSize = 12,
-            Labeler = value => $"{((int)value - 60) * 2}s"
+            TextSize = 12
         } 
     };
 
@@ -271,6 +270,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
             {
                 Values = new[] { _cpuLoadValue },
                 InnerRadius = 22,
+                HoverPushout = 0,
                 MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(167, 196, 126)), // Greenish
                 DataLabelsPaint = null
@@ -279,6 +279,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
             {
                 Values = new[] { _cpuLoadRemaining },
                 InnerRadius = 22,
+                HoverPushout = 0,
                 MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(0, 0, 0, 0)),
                 DataLabelsPaint = null,
@@ -292,6 +293,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
             {
                 Values = new[] { _gpuLoadValue },
                 InnerRadius = 22,
+                HoverPushout = 0,
                 MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(167, 196, 126)),
                 DataLabelsPaint = null
@@ -300,6 +302,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
             {
                 Values = new[] { _gpuLoadRemaining },
                 InnerRadius = 22,
+                HoverPushout = 0,
                 MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(0, 0, 0, 0)),
                 DataLabelsPaint = null,
