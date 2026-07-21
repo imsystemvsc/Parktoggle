@@ -25,7 +25,7 @@
         </LinearGradientBrush>
         <SolidColorBrush x:Key="CardBackgroundBrush" Color="#222222" />
         <SolidColorBrush x:Key="CardBorderBrush" Color="#333333" />
-        <SolidColorBrush x:Key="ForegroundBrush" Color="#F0F0F0" />
+        <SolidColorBrush x:Key="ForegroundBrush" Color="#E8E6E3" />
         <SolidColorBrush x:Key="MutedBrush" Color="#888888" />
         <SolidColorBrush x:Key="AccentBrush" Color="#00D084" />
         <SolidColorBrush x:Key="AccentHoverBrush" Color="#00E691" />
@@ -337,7 +337,9 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#222222" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="#333333" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#00D084" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,3" />
+                                <Setter Property="FontWeight" Value="Bold" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="#2A2A2A" />
@@ -629,8 +631,7 @@
                                     <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                                 </CheckBox.LayoutTransform>
                             </CheckBox>
-                            <TextBlock Grid.Column="1" Text="Start with Windows" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" FontSize="13" VerticalAlignment="Center" Margin="8,0,0,0" />
-                            <TextBlock Grid.Column="1" Text="Minimized" Foreground="{StaticResource MutedBrush}" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                            <TextBlock Grid.Column="1" Text="Start with Windows (Minimized)" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" FontSize="13" VerticalAlignment="Center" Margin="8,0,0,0" />
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -679,11 +680,17 @@
                                     <TextBlock Grid.Row="0" Text="CPU TEMP:" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
                                     <Grid Grid.Row="1" Margin="0,4,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding ViewModel.PackageTempText, FallbackValue='45.0 °C'}" FontFamily="Bahnschrift" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" VerticalAlignment="Center"/>
-                                        <lvc:PieChart Grid.Column="1" Series="{Binding ViewModel.CpuLoadSeries}" Width="36" Height="36" Background="Transparent" TooltipPosition="Hidden" VerticalAlignment="Center" />
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid Width="50" Height="50">
+                                                <lvc:PieChart Series="{Binding ViewModel.CpuLoadSeries}" Background="Transparent" TooltipPosition="Hidden" />
+                                                <TextBlock Text="{Binding ViewModel.CpuLoadText, FallbackValue='42%'}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ForegroundBrush}" FontSize="12" FontWeight="Bold" />
+                                            </Grid>
+                                            <TextBlock Text="LOAD" FontFamily="Bahnschrift" FontSize="9" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                        </StackPanel>
                                     </Grid>
                                 </Grid>
                                 
@@ -696,24 +703,30 @@
                                     <TextBlock Grid.Row="0" Text="GPU TEMP:" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
                                     <Grid Grid.Row="1" Margin="0,4,0,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding ViewModel.GpuTempText, FallbackValue='45.0 °C'}" FontFamily="Bahnschrift" FontSize="36" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}" VerticalAlignment="Center"/>
-                                        <lvc:PieChart Grid.Column="1" Series="{Binding ViewModel.GpuLoadSeries}" Width="36" Height="36" Background="Transparent" TooltipPosition="Hidden" VerticalAlignment="Center" />
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Grid Width="50" Height="50">
+                                                <lvc:PieChart Series="{Binding ViewModel.GpuLoadSeries}" Background="Transparent" TooltipPosition="Hidden" />
+                                                <TextBlock Text="{Binding ViewModel.GpuLoadText, FallbackValue='42%'}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ForegroundBrush}" FontSize="12" FontWeight="Bold" />
+                                            </Grid>
+                                            <TextBlock Text="LOAD" FontFamily="Bahnschrift" FontSize="9" Foreground="{StaticResource MutedBrush}" HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                        </StackPanel>
                                     </Grid>
                                 </Grid>
                             </Grid>
                             
                             <!-- Historical Trend -->
                             <StackPanel Grid.Row="2" Margin="0,16,0,0">
-                                <TextBlock Text="HISTORICAL TREND (1 Hour)" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
+                                <TextBlock Text="HISTORICAL TREND (CPU TEMP - 1 Hour)" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
                                 <lvc:CartesianChart
                                     Series="{Binding ViewModel.TemperatureSeries}"
                                     Height="70"
                                     Margin="0,8,0,0"
                                     Background="Transparent"
-                                    TooltipPosition="Hidden"
+                                    TooltipPosition="Top"
                                     XAxes="{Binding ViewModel.EmptyAxes}"
                                     YAxes="{Binding ViewModel.TempYAxes}">
                                 </lvc:CartesianChart>

@@ -54,8 +54,31 @@ public partial class MainViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private ISeries[] _gpuLoadSeries = Array.Empty<ISeries>();
 
-    public Axis[] EmptyAxes { get; set; } = new Axis[] { new Axis { IsVisible = false } };
-    public Axis[] TempYAxes { get; set; } = new Axis[] { new Axis { IsVisible = false, MinLimit = 30, MaxLimit = 105 } };
+    public Axis[] EmptyAxes { get; set; } = new Axis[] 
+    { 
+        new Axis 
+        { 
+            IsVisible = true,
+            ShowSeparatorLines = false,
+            LabelsPaint = new SolidColorPaint(new SKColor(136, 136, 136)),
+            TextSize = 12
+        } 
+    };
+
+    public Axis[] TempYAxes { get; set; } = new Axis[] 
+    { 
+        new Axis 
+        { 
+            IsVisible = true, 
+            MinLimit = 30, 
+            MaxLimit = 105,
+            ShowSeparatorLines = true,
+            SeparatorsPaint = new SolidColorPaint(new SKColor(51, 51, 51)),
+            LabelsPaint = new SolidColorPaint(new SKColor(136, 136, 136)),
+            Labeler = value => $"{value} °C",
+            TextSize = 12
+        } 
+    };
 
     [ObservableProperty]
     private ObservableCollection<PowerPlan> _plans = new();
@@ -112,6 +135,20 @@ public partial class MainViewModel : ObservableObject, IDisposable
     public string LogPath => _powerPlanService.LogPath;
 
     private const string AppName = "ParkToggle";
+    private string _cpuLoadText = "0%";
+    public string CpuLoadText
+    {
+        get => _cpuLoadText;
+        set { _cpuLoadText = value; OnPropertyChanged(nameof(CpuLoadText)); }
+    }
+
+    private string _gpuLoadText = "0%";
+    public string GpuLoadText
+    {
+        get => _gpuLoadText;
+        set { _gpuLoadText = value; OnPropertyChanged(nameof(GpuLoadText)); }
+    }
+
     private const string RegistryKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
     public bool StartWithWindows
@@ -232,16 +269,16 @@ public partial class MainViewModel : ObservableObject, IDisposable
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _cpuLoadValue },
-                InnerRadius = 18,
-                MaxRadialColumnWidth = 6,
+                InnerRadius = 24,
+                MaxRadialColumnWidth = 12,
                 Fill = new SolidColorPaint(new SKColor(167, 196, 126)), // Greenish
                 DataLabelsPaint = null
             },
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _cpuLoadRemaining },
-                InnerRadius = 18,
-                MaxRadialColumnWidth = 6,
+                InnerRadius = 24,
+                MaxRadialColumnWidth = 12,
                 Fill = new SolidColorPaint(new SKColor(51, 51, 51)),
                 DataLabelsPaint = null
             }
@@ -252,16 +289,16 @@ public partial class MainViewModel : ObservableObject, IDisposable
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _gpuLoadValue },
-                InnerRadius = 18,
-                MaxRadialColumnWidth = 6,
-                Fill = new SolidColorPaint(new SKColor(240, 220, 100)), // Yellowish
+                InnerRadius = 24,
+                MaxRadialColumnWidth = 12,
+                Fill = new SolidColorPaint(new SKColor(167, 196, 126)),
                 DataLabelsPaint = null
             },
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _gpuLoadRemaining },
-                InnerRadius = 18,
-                MaxRadialColumnWidth = 6,
+                InnerRadius = 24,
+                MaxRadialColumnWidth = 12,
                 Fill = new SolidColorPaint(new SKColor(51, 51, 51)),
                 DataLabelsPaint = null
             }
@@ -492,12 +529,14 @@ public partial class MainViewModel : ObservableObject, IDisposable
             {
                 _cpuLoadValue.Value = snapshot.CpuLoad.Value;
                 _cpuLoadRemaining.Value = Math.Max(0, 100 - snapshot.CpuLoad.Value);
+                CpuLoadText = $"{snapshot.CpuLoad.Value:F0}%";
             }
 
             if (snapshot.GpuLoad.HasValue)
             {
                 _gpuLoadValue.Value = snapshot.GpuLoad.Value;
                 _gpuLoadRemaining.Value = Math.Max(0, 100 - snapshot.GpuLoad.Value);
+                GpuLoadText = $"{snapshot.GpuLoad.Value:F0}%";
             }
 
             if (snapshot.PackageCelsius.HasValue)
