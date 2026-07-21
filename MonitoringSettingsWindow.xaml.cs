@@ -54,7 +54,48 @@ public partial class MonitoringSettingsWindow : Window
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         _searchText = SearchBox.Text.Trim();
+        ClearSearchButton.Visibility = string.IsNullOrEmpty(_searchText) ? Visibility.Collapsed : Visibility.Visible;
         RebuildTree();
+    }
+
+    private void ClearSearch_Click(object sender, RoutedEventArgs e)
+    {
+        SearchBox.Text = string.Empty;
+    }
+
+    private void SelectAll_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (var node in SensorTreeNodes)
+        {
+            node.IsSelectedState = true;
+        }
+    }
+
+    private void DeselectAll_Click(object sender, RoutedEventArgs e)
+    {
+        foreach (var node in SensorTreeNodes)
+        {
+            node.IsSelectedState = false;
+        }
+    }
+
+    private void ExpandAll_Click(object sender, RoutedEventArgs e)
+    {
+        SetExpandedAll(SensorTreeNodes, true);
+    }
+
+    private void CollapseAll_Click(object sender, RoutedEventArgs e)
+    {
+        SetExpandedAll(SensorTreeNodes, false);
+    }
+
+    private void SetExpandedAll(IEnumerable<MonitoringTreeNode> nodes, bool isExpanded)
+    {
+        foreach (var node in nodes)
+        {
+            node.IsExpanded = isExpanded;
+            SetExpandedAll(node.Children, isExpanded);
+        }
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -77,8 +118,17 @@ public partial class MonitoringSettingsWindow : Window
         var nodes = MonitoringTreeBuilder.Build(filtered);
 
         SensorTreeNodes.Clear();
+        bool hasSearch = !string.IsNullOrWhiteSpace(_searchText);
         foreach (var node in nodes)
         {
+            if (hasSearch)
+            {
+                node.IsExpanded = true;
+                foreach (var child in node.Children)
+                {
+                    child.IsExpanded = true;
+                }
+            }
             SensorTreeNodes.Add(node);
         }
 
