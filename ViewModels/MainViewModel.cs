@@ -61,7 +61,8 @@ public partial class MainViewModel : ObservableObject, IDisposable
             IsVisible = true,
             ShowSeparatorLines = false,
             LabelsPaint = new SolidColorPaint(new SKColor(136, 136, 136)),
-            TextSize = 12
+            TextSize = 12,
+            Labeler = value => $"{((int)value - 60) * 2}s"
         } 
     };
 
@@ -269,16 +270,16 @@ public partial class MainViewModel : ObservableObject, IDisposable
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _cpuLoadValue },
-                InnerRadius = 24,
-                MaxRadialColumnWidth = 12,
+                InnerRadius = 22,
+                MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(167, 196, 126)), // Greenish
                 DataLabelsPaint = null
             },
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _cpuLoadRemaining },
-                InnerRadius = 24,
-                MaxRadialColumnWidth = 12,
+                InnerRadius = 22,
+                MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(0, 0, 0, 0)),
                 DataLabelsPaint = null,
                 Stroke = null
@@ -290,16 +291,16 @@ public partial class MainViewModel : ObservableObject, IDisposable
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _gpuLoadValue },
-                InnerRadius = 24,
-                MaxRadialColumnWidth = 12,
+                InnerRadius = 22,
+                MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(167, 196, 126)),
                 DataLabelsPaint = null
             },
             new PieSeries<ObservableValue>
             {
                 Values = new[] { _gpuLoadRemaining },
-                InnerRadius = 24,
-                MaxRadialColumnWidth = 12,
+                InnerRadius = 22,
+                MaxRadialColumnWidth = 3,
                 Fill = new SolidColorPaint(new SKColor(0, 0, 0, 0)),
                 DataLabelsPaint = null,
                 Stroke = null

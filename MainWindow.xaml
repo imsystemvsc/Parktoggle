@@ -720,7 +720,7 @@
                             
                             <!-- Historical Trend -->
                             <StackPanel Grid.Row="2" Margin="0,16,0,0">
-                                <TextBlock Text="HISTORICAL TREND (CPU TEMP - 1 Hour)" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
+                                <TextBlock Text="HISTORICAL TREND (CPU TEMP - Last 2 Minutes)" FontFamily="Bahnschrift" Foreground="{StaticResource MutedBrush}" FontSize="12" />
                                 <lvc:CartesianChart
                                     Series="{Binding ViewModel.TemperatureSeries}"
                                     Height="110"
