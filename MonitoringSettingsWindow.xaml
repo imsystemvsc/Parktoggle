@@ -11,11 +11,9 @@
         MinHeight="480"
         MinWidth="540"
         WindowStartupLocation="CenterOwner"
-        Background="#14151B"
-        BorderBrush="#2C2E37"
+        Background="{StaticResource DialogBackgroundBrush}"
+        BorderBrush="{StaticResource CardBorderBrush}"
         BorderThickness="1">
-    <Window.Resources>
-    </Window.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -29,11 +27,11 @@
         <StackPanel Grid.Row="0" Margin="0,0,0,16">
             <TextBlock Text="CONFIGURE MONITORING SENSORS"
                        FontFamily="Bahnschrift"
-                       Foreground="#EEF0F4"
+                       Foreground="{StaticResource ForegroundBrush}"
                        FontSize="18"
                        FontWeight="SemiBold" />
             <TextBlock Text="Check sensors to pin them to the hardware category cards on your Monitoring tab"
-                       Foreground="#9AA0AE"
+                       Foreground="{StaticResource MutedBrush}"
                        FontSize="12"
                        Margin="0,4,0,0" />
         </StackPanel>
@@ -47,8 +45,8 @@
 
             <!-- Search Box -->
             <Border Grid.Column="0"
-                    Background="#1E1F27"
-                    BorderBrush="#2C2E37"
+                    Background="#1B1D26"
+                    BorderBrush="{StaticResource CardBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="6"
                     Padding="10,4"
@@ -62,7 +60,7 @@
 
                     <TextBlock Grid.Column="0"
                                Text="🔍"
-                               Foreground="#666666"
+                               Foreground="{StaticResource SubtleMutedBrush}"
                                FontSize="12"
                                VerticalAlignment="Center"
                                Margin="0,0,8,0" />
@@ -70,8 +68,8 @@
                     <TextBox x:Name="SearchBox"
                              Grid.Column="1"
                              Background="Transparent"
-                             Foreground="#EEF0F4"
-                             CaretBrush="#EEF0F4"
+                             Foreground="{StaticResource ForegroundBrush}"
+                             CaretBrush="{StaticResource ForegroundBrush}"
                              BorderThickness="0"
                              FontSize="13"
                              VerticalContentAlignment="Center"
@@ -80,7 +78,7 @@
                     <Button x:Name="ClearSearchButton"
                             Grid.Column="2"
                             Content="✕"
-                            Foreground="#888888"
+                            Foreground="{StaticResource MutedBrush}"
                             Background="Transparent"
                             BorderThickness="0"
                             FontSize="12"
@@ -102,8 +100,8 @@
 
         <!-- Sensor Tree Area -->
         <Border Grid.Row="2"
-                Background="#1E1F27"
-                BorderBrush="#2C2E37"
+                Background="#161820"
+                BorderBrush="{StaticResource CardBorderBrush}"
                 BorderThickness="1"
                 CornerRadius="8"
                 Padding="8">
@@ -112,14 +110,11 @@
                           ItemsSource="{Binding SensorTreeNodes}"
                           Background="Transparent"
                           BorderThickness="0"
-                          Foreground="#EEF0F4"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto">
+                          Foreground="{StaticResource ForegroundBrush}">
                     <TreeView.Resources>
-                        <Style TargetType="ScrollBar" BasedOn="{StaticResource SlimScrollBarStyle}" />
-                        
                         <!-- Hardware Node Template -->
                         <HierarchicalDataTemplate DataType="{x:Type monitoring:MonitoringHardwareNode}" ItemsSource="{Binding Children}">
-                            <Border Background="#252834" CornerRadius="6" Padding="8,6" Margin="0,4,8,4">
+                            <Border Background="#20232E" BorderBrush="{StaticResource CardBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="8,6" Margin="0,3">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -143,7 +138,7 @@
                                     <TextBlock Grid.Column="2"
                                                Text="{Binding Name}"
                                                FontFamily="Bahnschrift"
-                                               Foreground="#EEF0F4"
+                                               Foreground="{StaticResource ForegroundBrush}"
                                                FontSize="14"
                                                FontWeight="SemiBold"
                                                VerticalAlignment="Center" />
@@ -153,7 +148,7 @@
                         
                         <!-- Sensor Group Node Template -->
                         <HierarchicalDataTemplate DataType="{x:Type monitoring:MonitoringSensorGroupNode}" ItemsSource="{Binding Children}">
-                            <Border Padding="4,4" Margin="0,2,8,2">
+                            <Border Padding="4,4" Margin="0,2">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <CheckBox IsChecked="{Binding IsSelectedState, Mode=TwoWay}"
                                               IsThreeState="True"
@@ -162,7 +157,7 @@
                                               Focusable="False" />
                                     <TextBlock Text="{Binding Name}"
                                                FontFamily="Bahnschrift"
-                                               Foreground="#A0A5B5"
+                                               Foreground="{StaticResource MutedBrush}"
                                                FontSize="13"
                                                FontWeight="SemiBold"
                                                VerticalAlignment="Center" />
@@ -172,12 +167,12 @@
                         
                         <!-- Sensor Leaf Node Template -->
                         <DataTemplate DataType="{x:Type monitoring:MonitoringSensorLeafNode}">
-                            <Border Background="#191A21"
-                                    BorderBrush="#292C36"
+                            <Border Background="#1A1C25"
+                                    BorderBrush="#252834"
                                     BorderThickness="1"
                                     CornerRadius="4"
                                     Padding="8,6"
-                                    Margin="0,2,8,2">
+                                    Margin="0,2">
                                 <Grid VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -200,11 +195,11 @@
                                                
                                     <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Sensor.SensorDisplayName}"
-                                                   Foreground="#EEF0F4"
+                                                   Foreground="{StaticResource ForegroundBrush}"
                                                    FontSize="12.5"
                                                    TextTrimming="CharacterEllipsis" />
                                         <TextBlock Text="{Binding Sensor.GroupDisplayName}"
-                                                   Foreground="#666875"
+                                                   Foreground="{StaticResource SubtleMutedBrush}"
                                                    FontSize="10.5" />
                                     </StackPanel>
                                     
@@ -212,7 +207,7 @@
                                                Margin="16,0,0,0"
                                                Text="{Binding Sensor.CurrentDisplay}"
                                                FontFamily="Consolas, Cascadia Code, Courier New"
-                                               Foreground="#A7C47E"
+                                               Foreground="{StaticResource AccentBrush}"
                                                FontSize="12"
                                                FontWeight="SemiBold"
                                                HorizontalAlignment="Right"
@@ -221,20 +216,11 @@
                             </Border>
                         </DataTemplate>
                     </TreeView.Resources>
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem">
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                            <Setter Property="Foreground" Value="#EEF0F4" />
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="BorderThickness" Value="0" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </TreeView.ItemContainerStyle>
                 </TreeView>
 
                 <TextBlock x:Name="EmptyTreeMessage"
                            Text="No sensors match your search filter."
-                           Foreground="#9AA0AE"
+                           Foreground="{StaticResource MutedBrush}"
                            FontSize="13"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
@@ -251,36 +237,15 @@
 
             <TextBlock Grid.Column="0"
                        Text="Changes take effect immediately on your Monitoring tab."
-                       Foreground="#666875"
+                       Foreground="{StaticResource SubtleMutedBrush}"
                        FontSize="11.5"
                        VerticalAlignment="Center" />
 
             <Button Grid.Column="1"
                     Content="Done"
                     Width="110"
-                    Padding="0,8"
-                    Foreground="#14151B"
-                    Background="#A7C47E"
-                    BorderBrush="#A7C47E"
-                    BorderThickness="1"
-                    FontFamily="Bahnschrift"
-                    FontSize="13"
-                    FontWeight="SemiBold"
-                    Click="CloseButton_Click">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="b" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="b" Property="Background" Value="#B9D68E" />
-                                <Setter TargetName="b" Property="BorderBrush" Value="#B9D68E" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Click="CloseButton_Click" />
         </Grid>
     </Grid>
 </Window>
