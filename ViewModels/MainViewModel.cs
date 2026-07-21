@@ -112,6 +112,9 @@ public partial class MainViewModel : ObservableObject, IDisposable
     private string _gpuTempText = "--";
 
     [ObservableProperty]
+    private string _trayToolTipText = "Park Toggle";
+
+    [ObservableProperty]
     private string _automationStatusText = "Automation Status: Idle";
 
     [ObservableProperty]
@@ -530,6 +533,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
             var snapshot = _cpuTemperatureService.GetSnapshot();
             PackageTempText = snapshot.PackageCelsius.HasValue ? $"{snapshot.PackageCelsius.Value:F1} \u00B0C" : "N/A";
             GpuTempText = snapshot.GpuCelsius.HasValue ? $"{snapshot.GpuCelsius.Value:F1} \u00B0C" : "N/A";
+            TrayToolTipText = $"Park Toggle\nCPU: {PackageTempText} | GPU: {GpuTempText}";
 
             if (snapshot.CpuLoad.HasValue)
             {
@@ -584,6 +588,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
         {
             PackageTempText = "N/A";
             GpuTempText = "N/A";
+            TrayToolTipText = "Park Toggle";
             TaskbarProgressState = System.Windows.Shell.TaskbarItemProgressState.None;
         }
 

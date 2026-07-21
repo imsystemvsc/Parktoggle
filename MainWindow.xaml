@@ -361,7 +361,7 @@
     <Grid Background="{StaticResource WindowBackgroundBrush}">
 
         <tb:TaskbarIcon x:Name="TrayIcon"
-                        ToolTipText="Park Toggle"
+                        ToolTipText="{Binding ViewModel.TrayToolTipText, FallbackValue='Park Toggle'}"
                         IconSource="{Binding ViewModel.TrayIconSource}"
                         MenuActivation="RightClick"
                         TrayMouseDoubleClick="TaskbarIcon_TrayMouseDoubleClick">
