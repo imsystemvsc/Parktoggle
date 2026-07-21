@@ -863,30 +863,30 @@
                                                     </GroupStyle.Panel>
                                                     <GroupStyle.ContainerStyle>
                                                         <Style TargetType="GroupItem">
-                                                            <Setter Property="Margin" Value="0,0,12,12" />
+                                                            <Setter Property="Margin" Value="0,0,10,10" />
                                                             <Setter Property="Template">
                                                                 <Setter.Value>
                                                                     <ControlTemplate TargetType="GroupItem">
                                                                         <Border Background="#191919"
                                                                                 BorderBrush="#333333"
                                                                                 BorderThickness="1"
-                                                                                CornerRadius="10"
-                                                                                Padding="16">
+                                                                                CornerRadius="8"
+                                                                                Padding="12,10">
                                                                             <StackPanel>
                                                                                 <!-- Category Card Header -->
-                                                                                <Grid Margin="0,0,0,12">
+                                                                                <Grid Margin="0,0,0,8">
                                                                                     <Grid.ColumnDefinitions>
                                                                                         <ColumnDefinition Width="*" />
                                                                                         <ColumnDefinition Width="Auto" />
                                                                                     </Grid.ColumnDefinitions>
                                                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                                                        <Border Background="#252830" CornerRadius="4" Padding="6,3" Margin="0,0,8,0">
-                                                                                            <TextBlock Text="✦" Foreground="#A7C47E" FontSize="11" FontWeight="Bold" />
+                                                                                        <Border Background="#252830" CornerRadius="4" Padding="5,2" Margin="0,0,8,0">
+                                                                                            <TextBlock Text="✦" Foreground="#A7C47E" FontSize="10" FontWeight="Bold" />
                                                                                         </Border>
                                                                                         <TextBlock Text="{Binding Name}"
                                                                                                    FontFamily="Bahnschrift"
                                                                                                    Foreground="#EEF0F4"
-                                                                                                   FontSize="14"
+                                                                                                   FontSize="13"
                                                                                                    FontWeight="SemiBold" />
                                                                                     </StackPanel>
                                                                                     <TextBlock Grid.Column="1"
@@ -896,7 +896,7 @@
                                                                                                FontSize="11"
                                                                                                VerticalAlignment="Center" />
                                                                                 </Grid>
-                                                                                <Border Height="1" Background="#262626" Margin="0,0,0,10" />
+                                                                                <Border Height="1" Background="#262626" Margin="0,0,0,6" />
 
                                                                                 <!-- Card Sensors -->
                                                                                 <ItemsPresenter />
@@ -911,63 +911,62 @@
                                             </ListView.GroupStyle>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border BorderThickness="0,0,0,1" BorderBrush="#262626" Padding="4,8,4,10">
-                                                        <StackPanel>
-                                                            <Grid>
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" />
-                                                                    <ColumnDefinition Width="Auto" />
-                                                                </Grid.ColumnDefinitions>
-                                                                <TextBlock Text="{Binding SensorDisplayName}"
-                                                                           Foreground="{StaticResource MutedBrush}"
-                                                                           FontSize="13"
-                                                                           TextTrimming="CharacterEllipsis"
-                                                                           VerticalAlignment="Center" />
-                                                                <TextBlock Grid.Column="1"
-                                                                           Text="{Binding CurrentDisplay}"
-                                                                           FontFamily="Consolas, Cascadia Code, Courier New"
-                                                                           FontSize="14"
-                                                                           FontWeight="SemiBold"
-                                                                           Foreground="#EEF0F4"
-                                                                           HorizontalAlignment="Right" />
-                                                            </Grid>
+                                                    <Border BorderThickness="0,0,0,1" BorderBrush="#222222" Padding="2,5">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="65" />
+                                                                <ColumnDefinition Width="85" />
+                                                                <ColumnDefinition Width="105" />
+                                                            </Grid.ColumnDefinitions>
+                                                            
+                                                            <!-- Sensor Name -->
+                                                            <TextBlock Grid.Column="0"
+                                                                       Text="{Binding SensorDisplayName}"
+                                                                       Foreground="{StaticResource MutedBrush}"
+                                                                       FontSize="12.5"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       VerticalAlignment="Center" />
 
-                                                            <!-- Progress Bar & Range Row -->
-                                                            <Grid Margin="0,6,0,0">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" />
-                                                                    <ColumnDefinition Width="Auto" />
-                                                                </Grid.ColumnDefinitions>
+                                                            <!-- Mini Progress Bar -->
+                                                            <ProgressBar Grid.Column="1"
+                                                                         Value="{Binding ProgressPercent, Mode=OneWay}"
+                                                                         Maximum="100"
+                                                                         Height="4"
+                                                                         Margin="4,0,8,0"
+                                                                         VerticalAlignment="Center"
+                                                                         Background="#242424"
+                                                                         Foreground="#A7C47E"
+                                                                         BorderThickness="0">
+                                                                <ProgressBar.Style>
+                                                                    <Style TargetType="ProgressBar">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding HasProgress}" Value="True">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </ProgressBar.Style>
+                                                            </ProgressBar>
 
-                                                                <ProgressBar Grid.Column="0"
-                                                                             Value="{Binding ProgressPercent, Mode=OneWay}"
-                                                                             Maximum="100"
-                                                                             Height="4"
-                                                                             Margin="0,0,12,0"
-                                                                             VerticalAlignment="Center"
-                                                                             Background="#262626"
-                                                                             Foreground="#A7C47E"
-                                                                             BorderThickness="0">
-                                                                    <ProgressBar.Style>
-                                                                        <Style TargetType="ProgressBar">
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                                            <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding HasProgress}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                                </DataTrigger>
-                                                                            </Style.Triggers>
-                                                                        </Style>
-                                                                    </ProgressBar.Style>
-                                                                </ProgressBar>
+                                                            <!-- Current Display Value -->
+                                                            <TextBlock Grid.Column="2"
+                                                                       Text="{Binding CurrentDisplay}"
+                                                                       FontFamily="Consolas, Cascadia Code, Courier New"
+                                                                       FontSize="13"
+                                                                       FontWeight="SemiBold"
+                                                                       Foreground="#EEF0F4"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center" />
 
-                                                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                                                    <TextBlock Text="Min: " Foreground="#666666" FontSize="11" FontFamily="Bahnschrift" />
-                                                                    <TextBlock Text="{Binding MinDisplay}" Foreground="{StaticResource MutedBrush}" FontSize="11" FontFamily="Consolas" Margin="0,0,8,0" />
-                                                                    <TextBlock Text="Max: " Foreground="#666666" FontSize="11" FontFamily="Bahnschrift" />
-                                                                    <TextBlock Text="{Binding MaxDisplay}" Foreground="{StaticResource MutedBrush}" FontSize="11" FontFamily="Consolas" />
-                                                                </StackPanel>
-                                                            </Grid>
-                                                        </StackPanel>
+                                                            <!-- Min / Max Range -->
+                                                            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                                <TextBlock Text="{Binding MinDisplay}" Foreground="#666666" FontSize="10.5" FontFamily="Consolas" />
+                                                                <TextBlock Text=" / " Foreground="#444444" FontSize="10.5" FontFamily="Consolas" />
+                                                                <TextBlock Text="{Binding MaxDisplay}" Foreground="#888888" FontSize="10.5" FontFamily="Consolas" />
+                                                            </StackPanel>
+                                                        </Grid>
                                                     </Border>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
