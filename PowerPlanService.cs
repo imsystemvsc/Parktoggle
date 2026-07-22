@@ -39,6 +39,7 @@ public sealed class PowerPlanService
     private static readonly Guid CoreGuid = new("0cc5b647-c1df-4637-891a-dec35c318583");
     private static readonly Guid IdleGuid = new("9943e905-9a30-4ec1-9b99-44dd3b76f7a2");
     private static readonly Guid MaxPerfStateGuid = new("bc5038f7-23e0-4960-96da-33abaf5935ec");
+    private static readonly Guid MinPerfStateGuid = new("893dee8e-2bef-41e0-89c6-b55d0929964c");
     private static readonly Guid PerfIncTimeGuid = new("984cf492-3bed-4488-a8f9-4286c97bf5aa");
     private static readonly Guid CpIncreasePolGuid = new("c7be0679-2817-4d69-9d02-519a537ed0c6");
     private static readonly string VisibilityMarkerPath = ResolveVisibilityMarkerPath();
@@ -210,6 +211,7 @@ public sealed class PowerPlanService
         await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", CoreGuid, coreValues, token).ConfigureAwait(false);
         await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", IdleGuid, idleValues, token).ConfigureAwait(false);
         await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", MaxPerfStateGuid, maxPerfValues, token).ConfigureAwait(false);
+        await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", MinPerfStateGuid, mode == ParkMode.CoolIdle ? new PowerSettingValues(5, 5) : new PowerSettingValues(100, 100), token).ConfigureAwait(false);
         await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", PerfIncTimeGuid, perfIncTimeValues, token).ConfigureAwait(false);
         await SetSettingValuesAsync(cleanPlan, "SUB_PROCESSOR", CpIncreasePolGuid, cpIncreasePolValues, token).ConfigureAwait(false);
 
