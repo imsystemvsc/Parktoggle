@@ -79,7 +79,7 @@ internal sealed class CpuTemperatureService : IDisposable
             double? cpuVoltage = _cpuVoltageSensor?.Value;
             double? gpuPower = _gpuPowerSensor?.Value;
             double? gpuClock = _gpuClockSensor?.Value;
-            double? gpuVoltage = _gpuVoltageSensor?.Value;
+            double? gpuVoltage = _gpuVoltageSensor?.Value ?? MsiAfterburnerReader.GetGpuVoltage();
 
             var cores = _coreSensors
                 .Select((sensor, index) => new CoreTemperature(NormalizeCoreName(sensor.Name, index), sensor.Value))
