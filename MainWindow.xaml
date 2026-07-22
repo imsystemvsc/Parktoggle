@@ -576,9 +576,12 @@
                                     </Setter>
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ViewModel.CurrentMode}" Value="CoolIdle">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
+                                         <DataTrigger Binding="{Binding ViewModel.CurrentMode}" Value="CoolIdle">
+                                             <Setter Property="Visibility" Value="Visible" />
+                                         </DataTrigger>
+                                         <DataTrigger Binding="{Binding ViewModel.CurrentMode}" Value="Custom">
+                                             <Setter Property="Visibility" Value="Visible" />
+                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>

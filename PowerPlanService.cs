@@ -222,14 +222,14 @@ public sealed class PowerPlanService
 
     private static ParkMode ResolveMode(PowerSettingValues core, PowerSettingValues idle)
     {
-        if (core.Ac == 0 && core.Dc == 0 && idle.Ac >= 20 && idle.Dc >= 20)
-        {
-            return ParkMode.CoolIdle;
-        }
-
         if (core.Ac >= 100 && core.Dc >= 100 && idle.Ac <= 0 && idle.Dc <= 0)
         {
             return ParkMode.AlwaysOn;
+        }
+
+        if ((core.Ac < 100 || core.Dc < 100) || (idle.Ac > 0 || idle.Dc > 0))
+        {
+            return ParkMode.CoolIdle;
         }
 
         return ParkMode.Custom;
