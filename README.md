@@ -4,6 +4,10 @@
 
 By running silently in your system tray, **CoolShift** automatically shifts your PC between an energy-efficient **Cool Idle** mode (dropping idle CPU package power down to ~8.1W at 35°C) and a high-performance **Always On** mode whenever heavy workloads or games are launched.
 
+<p align="center">
+  <img src="Resources/screenshot.png" alt="CoolShift Dashboard Overview" width="850">
+</p>
+
 ---
 
 ## ✨ Key Features
