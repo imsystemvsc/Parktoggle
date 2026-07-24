@@ -19,7 +19,7 @@ public class AutomationOptions
 public class AutomationService : IAsyncDisposable, IDisposable
 {
     private readonly PowerPlanService _powerPlanService;
-    private readonly AutomationOptions _options;
+    private AutomationOptions _options;
     private readonly CancellationTokenSource _cts = new();
     private Task? _loopTask;
     private bool _isCurrentlyOnBattery;
@@ -82,6 +82,24 @@ public class AutomationService : IAsyncDisposable, IDisposable
         }
     }
 
+    public void UpdateOptions(AutomationOptions options)
+    {
+        _options = options;
+        _ = TriggerEvaluationAsync();
+    }
+
+    public async Task TriggerEvaluationAsync()
+    {
+        try
+        {
+            await EvaluateConditionsAsync(_cts.Token);
+        }
+        catch (Exception ex)
+        {
+            Trace.WriteLine($"Automation evaluation error: {ex}");
+        }
+    }
+
     private async Task EvaluateConditionsAsync(CancellationToken token)
     {
         if (BasePlanGuid is null)
@@ -109,30 +127,34 @@ public class AutomationService : IAsyncDisposable, IDisposable
         // Priority 2: Target Processes (Forces AlwaysOn)
         bool isTargetRunning = IsAnyTargetProcessRunning();
         
-        if (isTargetRunning && !_wasRunningTargetProcess)
+        if (isTargetRunning)
         {
-            // Target launched, switch to AlwaysOn
-            var snapshot = await _powerPlanService.GetModeSnapshotAsync(BasePlanGuid, token);
-            if (snapshot.Mode != ParkMode.AlwaysOn)
+            if (!_wasRunningTargetProcess || ActiveTargetName == null)
             {
-                await _powerPlanService.SetModeAsync(BasePlanGuid, "Game Auto-Switch", ParkMode.AlwaysOn, _options.SelectedCoolIdleTier, token);
-                AutomationTriggered?.Invoke(this, $"Switched to Always-On (Detected: {ActiveTargetName})");
-                _powerPlanService.Log($"Automation triggered: Switched to Always-On (Detected: {ActiveTargetName})");
+                var snapshot = await _powerPlanService.GetModeSnapshotAsync(BasePlanGuid, token);
+                if (snapshot.Mode != ParkMode.AlwaysOn)
+                {
+                    await _powerPlanService.SetModeAsync(BasePlanGuid, "Game Auto-Switch", ParkMode.AlwaysOn, _options.SelectedCoolIdleTier, token);
+                    AutomationTriggered?.Invoke(this, $"Switched to Always-On (Detected: {ActiveTargetName})");
+                    _powerPlanService.Log($"Automation triggered: Switched to Always-On (Detected: {ActiveTargetName})");
+                }
+                _wasRunningTargetProcess = true;
             }
-            _wasRunningTargetProcess = true;
         }
-        else if (!isTargetRunning && _wasRunningTargetProcess)
+        else
         {
-            // Target closed, switch back to Cool Idle
-            var snapshot = await _powerPlanService.GetModeSnapshotAsync(BasePlanGuid, token);
-            if (snapshot.Mode != ParkMode.CoolIdle)
+            if (_wasRunningTargetProcess || ActiveTargetName != null)
             {
-                await _powerPlanService.SetModeAsync(BasePlanGuid, "Game Auto-Switch", ParkMode.CoolIdle, _options.SelectedCoolIdleTier, token);
-                AutomationTriggered?.Invoke(this, $"Switched to Cool Idle [{PowerPlanService.TierToDisplay(_options.SelectedCoolIdleTier)}] (Game Closed)");
-                _powerPlanService.Log($"Automation triggered: Switched to Cool Idle [{PowerPlanService.TierToDisplay(_options.SelectedCoolIdleTier)}] (Game Closed)");
+                var snapshot = await _powerPlanService.GetModeSnapshotAsync(BasePlanGuid, token);
+                if (snapshot.Mode != ParkMode.CoolIdle)
+                {
+                    await _powerPlanService.SetModeAsync(BasePlanGuid, "Game Auto-Switch", ParkMode.CoolIdle, _options.SelectedCoolIdleTier, token);
+                    AutomationTriggered?.Invoke(this, $"Switched to Cool Idle [{PowerPlanService.TierToDisplay(_options.SelectedCoolIdleTier)}] (Game Closed/Removed)");
+                    _powerPlanService.Log($"Automation triggered: Switched to Cool Idle [{PowerPlanService.TierToDisplay(_options.SelectedCoolIdleTier)}] (Game Closed/Removed)");
+                }
+                ActiveTargetName = null;
+                _wasRunningTargetProcess = false;
             }
-            ActiveTargetName = null;
-            _wasRunningTargetProcess = false;
         }
     }
 
@@ -151,7 +173,7 @@ public class AutomationService : IAsyncDisposable, IDisposable
                 
                 foreach (var target in _options.TargetExecutables)
                 {
-                    string cleanTarget = System.IO.Path.GetFileNameWithoutExtension(target).ToLowerInvariant();
+                    string cleanTarget = System.IO.Path.GetFileNameWithoutExtension(target.Trim('"', ' ')).ToLowerInvariant();
                     if (string.Equals(procName, cleanTarget, StringComparison.OrdinalIgnoreCase))
                     {
                         ActiveTargetName = System.IO.Path.GetFileName(target);

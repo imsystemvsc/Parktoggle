@@ -28,6 +28,7 @@
             <ListBox x:Name="ProcessList" 
                      Background="Transparent"
                      BorderThickness="0"
+                     MouseDoubleClick="ProcessList_MouseDoubleClick"
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

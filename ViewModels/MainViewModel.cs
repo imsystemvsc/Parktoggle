@@ -381,6 +381,7 @@ public partial class MainViewModel : ObservableObject, IDisposable
         // Load settings before starting automation
         AutomationSettings = AutomationSettingsManager.Load();
         SelectedCoolIdleTier = AutomationSettings.SelectedCoolIdleTier;
+        _smartBatteryEnabled = AutomationSettings.SmartBatteryEnabled;
 
         _automationService = new AutomationService(_powerPlanService, AutomationSettings);
         _automationService.AutomationTriggered += (s, msg) => 
@@ -398,6 +399,29 @@ public partial class MainViewModel : ObservableObject, IDisposable
         // Start initial refresh
         _ = RefreshAsync();
         _cpuTimer.Start();
+    }
+
+    [ObservableProperty]
+    private bool _smartBatteryEnabled = true;
+
+    partial void OnSmartBatteryEnabledChanged(bool value)
+    {
+        var newSettings = new AutomationOptions
+        {
+            SmartBatteryEnabled = value,
+            TargetExecutables = AutomationSettings.TargetExecutables.ToList(),
+            SelectedCoolIdleTier = SelectedCoolIdleTier
+        };
+        UpdateAutomationOptions(newSettings);
+    }
+
+    public void UpdateAutomationOptions(AutomationOptions newSettings)
+    {
+        AutomationSettings = newSettings;
+        AutomationSettingsManager.Save(AutomationSettings);
+        OnPropertyChanged(nameof(AutomationSettings));
+        _automationService?.UpdateOptions(AutomationSettings);
+        SyncTargetExecutables();
     }
 
     private void SyncTargetExecutables()
@@ -424,6 +448,27 @@ public partial class MainViewModel : ObservableObject, IDisposable
                             System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
                     }
                 }
+                else
+                {
+                    var procName = System.IO.Path.GetFileNameWithoutExtension(path);
+                    var proc = System.Diagnostics.Process.GetProcessesByName(procName).FirstOrDefault();
+                    if (proc != null)
+                    {
+                        var filePath = proc.MainModule?.FileName;
+                        if (!string.IsNullOrEmpty(filePath) && System.IO.File.Exists(filePath))
+                        {
+                            vm.FullPath = filePath;
+                            using var icon = System.Drawing.Icon.ExtractAssociatedIcon(filePath);
+                            if (icon != null)
+                            {
+                                vm.Icon = System.Windows.Interop.Imaging.CreateBitmapSourceFromHIcon(
+                                    icon.Handle,
+                                    System.Windows.Int32Rect.Empty,
+                                    System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                            }
+                        }
+                    }
+                }
             }
             catch { }
 
@@ -443,18 +488,17 @@ public partial class MainViewModel : ObservableObject, IDisposable
         if (dialog.ShowDialog() == true)
         {
             string fileName = dialog.FileName; // Full path
-            if (!AutomationSettings.TargetExecutables.Contains(fileName))
+            string exeName = System.IO.Path.GetFileName(fileName);
+            if (!AutomationSettings.TargetExecutables.Any(t => string.Equals(System.IO.Path.GetFileName(t), exeName, StringComparison.OrdinalIgnoreCase)))
             {
                 var newSettings = new AutomationOptions
                 {
-                    SmartBatteryEnabled = AutomationSettings.SmartBatteryEnabled,
-                    TargetExecutables = AutomationSettings.TargetExecutables.ToList()
+                    SmartBatteryEnabled = SmartBatteryEnabled,
+                    TargetExecutables = AutomationSettings.TargetExecutables.ToList(),
+                    SelectedCoolIdleTier = SelectedCoolIdleTier
                 };
                 newSettings.TargetExecutables.Add(fileName);
-                AutomationSettings = newSettings;
-                AutomationSettingsManager.Save(AutomationSettings);
-                OnPropertyChanged(nameof(AutomationSettings));
-                SyncTargetExecutables();
+                UpdateAutomationOptions(newSettings);
             }
         }
     }
@@ -467,18 +511,17 @@ public partial class MainViewModel : ObservableObject, IDisposable
         
         if (dialog.ShowDialog() == true && !string.IsNullOrWhiteSpace(dialog.SelectedExecutable))
         {
-            if (!AutomationSettings.TargetExecutables.Contains(dialog.SelectedExecutable))
+            string exeName = System.IO.Path.GetFileName(dialog.SelectedExecutable);
+            if (!AutomationSettings.TargetExecutables.Any(t => string.Equals(System.IO.Path.GetFileName(t), exeName, StringComparison.OrdinalIgnoreCase)))
             {
                 var newSettings = new AutomationOptions
                 {
-                    SmartBatteryEnabled = AutomationSettings.SmartBatteryEnabled,
-                    TargetExecutables = AutomationSettings.TargetExecutables.ToList()
+                    SmartBatteryEnabled = SmartBatteryEnabled,
+                    TargetExecutables = AutomationSettings.TargetExecutables.ToList(),
+                    SelectedCoolIdleTier = SelectedCoolIdleTier
                 };
                 newSettings.TargetExecutables.Add(dialog.SelectedExecutable);
-                AutomationSettings = newSettings;
-                AutomationSettingsManager.Save(AutomationSettings);
-                OnPropertyChanged(nameof(AutomationSettings));
-                SyncTargetExecutables();
+                UpdateAutomationOptions(newSettings);
             }
         }
     }
@@ -488,18 +531,17 @@ public partial class MainViewModel : ObservableObject, IDisposable
     {
         if (vm == null) return;
         string fileName = vm.FullPath;
-        if (AutomationSettings.TargetExecutables.Contains(fileName))
+        var existing = AutomationSettings.TargetExecutables.FirstOrDefault(t => string.Equals(t, fileName, StringComparison.OrdinalIgnoreCase) || string.Equals(System.IO.Path.GetFileName(t), System.IO.Path.GetFileName(fileName), StringComparison.OrdinalIgnoreCase));
+        if (existing != null)
         {
             var newSettings = new AutomationOptions
             {
-                SmartBatteryEnabled = AutomationSettings.SmartBatteryEnabled,
-                TargetExecutables = AutomationSettings.TargetExecutables.ToList()
+                SmartBatteryEnabled = SmartBatteryEnabled,
+                TargetExecutables = AutomationSettings.TargetExecutables.ToList(),
+                SelectedCoolIdleTier = SelectedCoolIdleTier
             };
-            newSettings.TargetExecutables.Remove(fileName);
-            AutomationSettings = newSettings;
-            AutomationSettingsManager.Save(AutomationSettings);
-            OnPropertyChanged(nameof(AutomationSettings));
-            SyncTargetExecutables();
+            newSettings.TargetExecutables.Remove(existing);
+            UpdateAutomationOptions(newSettings);
         }
     }
 
@@ -543,12 +585,11 @@ public partial class MainViewModel : ObservableObject, IDisposable
 
         var newSettings = new AutomationOptions
         {
-            SmartBatteryEnabled = AutomationSettings.SmartBatteryEnabled,
+            SmartBatteryEnabled = SmartBatteryEnabled,
             TargetExecutables = AutomationSettings.TargetExecutables.ToList(),
             SelectedCoolIdleTier = tier
         };
-        AutomationSettings = newSettings;
-        AutomationSettingsManager.Save(AutomationSettings);
+        UpdateAutomationOptions(newSettings);
 
         if (CurrentMode == ParkMode.CoolIdle && SelectedPlan != null && !IsBusy)
         {
